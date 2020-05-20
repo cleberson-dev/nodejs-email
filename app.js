@@ -1,5 +1,5 @@
 const email = require('./email');
-
+const pug = require('pug');
 
 
 const message = {
@@ -8,7 +8,8 @@ const message = {
   subject: 'Envio de email com Node.js'
 };
 
-message.text = `Olá, ${message.to}!`;
+const templatePath = 'templates/email.pug';
+message.html = pug.compileFile(templatePath)({ email: message.to });
 
 email.sendMail(message, (err, info) => {
   if (err) return console.error(err);
